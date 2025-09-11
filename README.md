@@ -29,8 +29,6 @@ PostGenerator-AIAgent-LangChain/
 ```
 ---
 
-```
-
 ## Technologies
 
 - Python 3.10+
