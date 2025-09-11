@@ -29,37 +29,51 @@ PostGenerator-AIAgent-LangChain/
 ```
 ---
 
-## Installation
+## Technologies
 
-1. **Clone the repository**
+- Python 3.10+
+
+- Streamlit
+
+- langchain
+
+
+## ⚙️ Installation
+
+### 1. Install Python and VS Code
+
+Make sure you have Python 3.10+ installed.
+
+Install VS Code and open the project folder.
+
+### 2. Clone the repository
 
 ```bash
 git clone <your-repo-url>
 cd PostGenerator-AIAgent-LangChain
 Create a virtual environment
 
-bash
-Copy code
-python -m venv venv
-source venv/bin/activate   # Linux/macOS
-venv\Scripts\activate      # Windows
-Install dependencies
+### 3.	Open VS Code
+	Create a new folder named PostGenerator-AIAgent-LangChain.
 
-bash
-Copy code
-pip install -r requirements.txt
-Setup environment variables
+### 4. Copy API Key
 
-Create a .env file in the project root:
-
-env
 Copy code
 OPENAI_API_KEY="your_openai_api_key"
 OPENAI_BASE_URL="https://models.github.ai/inference"   # GitHub Models endpoint
 MODEL_NAME="openai/gpt-4.1"
-Usage
-CLI Version
-Run Main.py:
+
+### 5. Create a virtual environment 
+    Open a terminal in the folder and run:
+    python -m venv venv
+    source venv/bin/activate       # Linux/macOS
+    venv\Scripts\activate          # Windows
+
+### 6.  Install dependencies:
+
+    pip install -r requirements.txt
+
+### 7. Run 
 
 bash
 Copy code
@@ -82,7 +96,7 @@ Enter your topic and select a language.
 
 Click Generate Post to receive your AI-generated LinkedIn post.
 
-Dependencies
+### 8. Dependencies
 LangChain – Chain AI prompts and models.
 
 OpenAI – LLM inference.
@@ -91,44 +105,21 @@ Python-dotenv – Manage environment variables.
 
 Streamlit – Web-based user interface.
 
-Screenshots
-Add screenshots here of your Streamlit UI or CLI output.
+```
+---
 
-License
-MIT License © 2025
-Made with ❤️ using LangChain + GitHub Models.
+## 📸 Screenshots
 
-Future Improvements
-Add support for more languages.
-
-Add LinkedIn post formatting options.
-
-Save generated posts to a local database or CSV.
-
-Add scheduling for auto-posting on LinkedIn.
-
-pgsql
-Copy code
-
-I can also create a **shorter, “GitHub-ready” version with badges and installation buttons** if you want it to look more professional for a repository.  
-
-Do you want me to do that?
+![Screenshot](https://github.com/debbrath/PostGenerator-AIAgent-LangChain/blob/main/image/LinkedInPost_1.png)
 
 
+---
 
 
-# PostGenerator-AIAgent-LangChain
-Using ChatGPT, AI Agent for generating LinkedIn Posts with LangChain
+✍️ Author
 
+Debbrath Debnath
 
-Open a terminal in the folder and run:
-python -m venv venv
-source venv/bin/activate       # Linux/macOS
-venv\Scripts\activate          # Windows
+📫 [Connect on LinkedIn](https://www.linkedin.com/in/debbrathdebnath/)
 
-pip install -r requirements.txt
-
-
-
-python -m main.py
-streamlit run UI.py
+🌐 [GitHub Profile](https://github.com/debbrath)
