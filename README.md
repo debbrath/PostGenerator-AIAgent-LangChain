@@ -105,6 +105,9 @@ Python-dotenv – Manage environment variables.
 
 Streamlit – Web-based user interface.
 
+```
+---
+
 ## 📸 Screenshots
 
 ![Screenshot](https://github.com/debbrath/PostGenerator-AIAgent-LangChain/blob/main/image/LinkedInPost_1.png)
