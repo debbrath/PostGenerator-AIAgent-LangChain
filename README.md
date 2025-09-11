@@ -112,9 +112,9 @@ Streamlit – Web-based user interface.
 
 ![Screenshot](https://github.com/debbrath/PostGenerator-AIAgent-LangChain/blob/main/image/LinkedInPost_1.png)
 
-br/>
 
 ---
+br/>
 
 ✍️ Author
 
