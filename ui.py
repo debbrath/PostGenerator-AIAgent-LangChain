@@ -46,49 +46,109 @@ def generate_post(topic: str, language: str) -> str:
     return result.content
 
 # ==============================
-# Streamlit UI
+# Streamlit UI Layout
 # ==============================
 st.set_page_config(page_title="LinkedIn Post Generator", page_icon="📝", layout="wide")
 
-# Sidebar
-with st.sidebar:
-    st.header("Settings ⚙️")
+# ==============================
+# Top Banner
+# ==============================
+st.markdown(
+    """
+    <style>
+    /* Fixed top banner */
+    .top-banner {
+        width: 100%;
+        background: linear-gradient(90deg, #4CAF50, #45a049);
+        padding: 15px 0; 
+        text-align: center;
+        border-radius: 0px 0px 10px 10px; 
+        color: white;
+        font-size: 24px; 
+        font-weight: 600;
+        box-shadow: 0px 2px 6px rgba(0,0,0,0.15);
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 9999;
+    }
+    .top-banner-sub {
+        font-size: 14px;
+        font-weight: 400;
+        margin-top: 2px;
+        opacity: 0.9;
+    }
+
+    /* Container below banner */
+    .banner-bottom-text {
+        width: 100%;
+        text-align: center;
+        font-size: 14px;
+        font-weight: 400;
+        color: #555;
+        margin-top: 10px;
+    }
+
+    /* Add top and horizontal margin to body */
+    .stApp {
+        margin-top: 110px;  /* 80px banner + 30px space for bottom text */
+        margin-left: 50px;  /* Left margin */
+        margin-right: 50px; /* Right margin */
+    }
+
+    /* Optional: make text area narrower */
+    textarea {
+        width: 100% !important;
+    }
+    </style>
+    <div class="top-banner">
+        📝 LinkedIn Post Generator
+        <div class="top-banner-sub">
+        Generate professional posts instantly with AI
+        </div>
+        <div class="top-banner-sub">
+        Made with ❤️ using <b>LangChain + GitHub Models</b>
+        </div>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
+# ==============================
+# Combined Input & Settings Frame
+# ==============================
+st.subheader("1️⃣ Enter Your Topic & Settings")
+with st.container():
+    # Language selector
     language = st.selectbox("Choose language:", ["English", "Bengali", "Spanish"])
-    st.markdown("---")
-    st.markdown("Made with ❤️ using **LangChain + GitHub Models**")
 
-# Main content
-st.title("📝 LinkedIn Post Generator (AI Agent)")
-st.markdown("Generate professional LinkedIn posts instantly.")
-
-# Session state for topic and post
-if "topic" not in st.session_state:
-    st.session_state.topic = ""
-if "post" not in st.session_state:
-    st.session_state.post = ""
-
-# Input
-st.session_state.topic = st.text_input("Enter your topic here:", value=st.session_state.topic)
-
-# Buttons
-col1, col2 = st.columns([1, 1])
-
-with col1:
-    if st.button("Generate Post"):
-        if st.session_state.topic.strip():
-            with st.spinner("Generating your LinkedIn post..."):
-                st.session_state.post = generate_post(st.session_state.topic, language)
-            st.success("✅ Post generated successfully!")
-        else:
-            st.warning("⚠️ Please enter a topic first.")
-
-with col2:
-    if st.button("Refresh"):
+    # Topic input
+    if "topic" not in st.session_state:
         st.session_state.topic = ""
-        st.session_state.post = ""
-        st.experimental_rerun()  # Refresh the page
+    st.session_state.topic = st.text_input("Topic:", value=st.session_state.topic)
 
-# Display generated post
-if st.session_state.post:
-    st.markdown("### ✍️ Generated LinkedIn Post:")
-    st.text_area("Post Content", st.session_state.post, height=250)
+    # Action buttons
+    col1, col2 = st.columns([1, 1])
+    with col1:
+        if st.button("Generate Post"):
+            if st.session_state.topic.strip():
+                with st.spinner("Generating your LinkedIn post..."):
+                    st.session_state.post = generate_post(st.session_state.topic, language)
+                st.success("✅ Post generated successfully!")
+            else:
+                st.warning("⚠️ Please enter a topic first.")
+    with col2:
+        if st.button("Refresh"):
+            for key in ["topic", "post"]:
+                if key in st.session_state:
+                    del st.session_state[key]
+            st.success("✅ Cleared!")
+
+st.markdown("---")
+
+# ==============================
+# Output frame
+# ==============================
+if "post" in st.session_state and st.session_state.post:
+    st.subheader("2️⃣ Generated LinkedIn Post")
+    st.text_area("Post Content:", st.session_state.post, height=250)
