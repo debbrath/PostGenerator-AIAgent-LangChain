@@ -10,4 +10,6 @@ venv\Scripts\activate          # Windows
 pip install -r requirements.txt
 
 
+
 python -m main.py
+streamlit run UI.py

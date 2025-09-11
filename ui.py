@@ -56,7 +56,6 @@ st.set_page_config(page_title="LinkedIn Post Generator", page_icon="📝", layou
 st.markdown(
     """
     <style>
-    /* Fixed top banner */
     .top-banner {
         width: 100%;
         background: linear-gradient(90deg, #4CAF50, #45a049);
@@ -78,25 +77,11 @@ st.markdown(
         margin-top: 2px;
         opacity: 0.9;
     }
-
-    /* Container below banner */
-    .banner-bottom-text {
-        width: 100%;
-        text-align: center;
-        font-size: 14px;
-        font-weight: 400;
-        color: #555;
-        margin-top: 10px;
-    }
-
-    /* Add top and horizontal margin to body */
     .stApp {
-        margin-top: 110px;  /* 80px banner + 30px space for bottom text */
-        margin-left: 50px;  /* Left margin */
-        margin-right: 50px; /* Right margin */
+        margin-top: 110px;
+        margin-left: 50px;
+        margin-right: 50px;
     }
-
-    /* Optional: make text area narrower */
     textarea {
         width: 100% !important;
     }
@@ -115,10 +100,16 @@ st.markdown(
 )
 
 # ==============================
-# Combined Input & Settings Frame
+# Left-Right Layout
 # ==============================
-st.subheader("1️⃣ Enter Your Topic & Settings")
-with st.container():
+left_col, right_col = st.columns([1, 2])  # Left narrower, right wider
+
+# ------------------------------
+# Left Column: Inputs
+# ------------------------------
+with left_col:
+    st.subheader("🖊️ Enter Your Topic & Settings")
+
     # Language selector
     language = st.selectbox("Choose language:", ["English", "Bengali", "Spanish"])
 
@@ -128,27 +119,58 @@ with st.container():
     st.session_state.topic = st.text_input("Topic:", value=st.session_state.topic)
 
     # Action buttons
-    col1, col2 = st.columns([1, 1])
-    with col1:
-        if st.button("Generate Post"):
-            if st.session_state.topic.strip():
-                with st.spinner("Generating your LinkedIn post..."):
-                    st.session_state.post = generate_post(st.session_state.topic, language)
-                st.success("✅ Post generated successfully!")
-            else:
-                st.warning("⚠️ Please enter a topic first.")
-    with col2:
-        if st.button("Refresh"):
-            for key in ["topic", "post"]:
-                if key in st.session_state:
-                    del st.session_state[key]
-            st.success("✅ Cleared!")
+    if st.button("Generate Post"):
+        if st.session_state.topic.strip():
+            with st.spinner("Generating your LinkedIn post..."):
+                st.session_state.post = generate_post(st.session_state.topic, language)
+            st.success("✅ Post generated successfully!")
+        else:
+            st.warning("⚠️ Please enter a topic first.")
 
-st.markdown("---")
+    if st.button("Refresh"):
+        for key in ["topic", "post"]:
+            if key in st.session_state:
+                del st.session_state[key]
+        st.success("✅ Cleared!")
 
-# ==============================
-# Output frame
-# ==============================
-if "post" in st.session_state and st.session_state.post:
-    st.subheader("2️⃣ Generated LinkedIn Post")
-    st.text_area("Post Content:", st.session_state.post, height=250)
+# ------------------------------
+# Right Column: Output
+# ------------------------------
+with right_col:
+    st.subheader("📄 Generated LinkedIn Post")
+    post_content = st.session_state.get("post", "")
+    st.text_area("Post Content:", value=post_content, height=400)
+    # Copy to Clipboard button
+    if post_content:       
+
+        # Download as text file
+        st.download_button(
+            label="⬇️ Download Post",
+            data=post_content,
+            file_name="linkedin_post.txt",
+            mime="text/plain"
+        )
+
+        # -----------------------
+    # Copy button using HTML + JS
+    # -----------------------
+    import streamlit.components.v1 as components
+
+    copy_html = f"""
+    <div style="margin-top:10px;">
+        <button style="
+            background-color:#4CAF50;
+            color:white;
+            border:none;
+            padding:8px 16px;
+            font-size:16px;
+            border-radius:5px;
+            cursor:pointer;"
+            onclick="navigator.clipboard.writeText(`{post_content}`);
+                     alert('✅ Post copied to clipboard!');">
+            📋 Copy Post
+        </button>
+    </div>
+    
+    """
+    components.html(copy_html, height=60)
