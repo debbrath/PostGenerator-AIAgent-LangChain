@@ -106,7 +106,7 @@ Python-dotenv – Manage environment variables.
 
 Streamlit – Web-based user interface.
 
-```
+
 ---
 
 ## 📸 Screenshots
