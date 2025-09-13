@@ -53,7 +53,8 @@ git clone <your-repo-url>
 cd PostGenerator-AIAgent-LangChain
 Create a virtual environment
 
-### 3.	Open VS Code
+```
+###  3.	Open VS Code
 	Create a new folder named PostGenerator-AIAgent-LangChain.
 
 ### 4. Copy API Key
